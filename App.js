@@ -3,7 +3,14 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useFonts  } from 'expo-font';
+import {Provider} from 'react-redux'
+import { NavigationContainer } from '@react-navigation/native';
+// import 'react-native-gesture-handler';
+import configureStore from './redux/configureStore'
+import NeweTaskScreen from './screens/NewTaskScreen';
+import StackNaviagtor from './navigation/stackNaviagtor';
 
+const store = configureStore()
 export default function App() {
   let [fontsLoaded] = useFonts({
     'bold': require('./assets/fonts/Montserrat-Bold.ttf'),
@@ -14,12 +21,11 @@ export default function App() {
     return <AppLoading />;
   }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Text style={{fontFamily: 'bold'}}>Open up App.js to start working on your app!</Text>
-      <Text style={{fontFamily: 'semiBold'}}>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+      <StackNaviagtor />
+    </NavigationContainer>
+    </Provider>
   );
 }
 
