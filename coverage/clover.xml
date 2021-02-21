@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1613927877457" clover="3.2.0">
+  <project timestamp="1613927877457" name="All files">
+    <metrics statements="8" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1" elements="11" coveredelements="6" complexity="0" loc="8" ncloc="8" packages="3" files="6" classes="6"/>
+    <package name="Task-Force-Challenge-Mobile">
+      <metrics statements="5" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+      <file name="App.js" path="F:\github\Task-Force-Challenge-Mobile\App.js">
+        <metrics statements="5" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="17" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="Task-Force-Challenge-Mobile.components.common">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="Button.js" path="F:\github\Task-Force-Challenge-Mobile\components\common\Button.js">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="InputField.js" path="F:\github\Task-Force-Challenge-Mobile\components\common\InputField.js">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="Task-Force-Challenge-Mobile.utils">
+      <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="colors.js" path="F:\github\Task-Force-Challenge-Mobile\utils\colors.js">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="dimensions.js" path="F:\github\Task-Force-Challenge-Mobile\utils\dimensions.js">
+        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+      </file>
+      <file name="platfrom.js" path="F:\github\Task-Force-Challenge-Mobile\utils\platfrom.js">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
