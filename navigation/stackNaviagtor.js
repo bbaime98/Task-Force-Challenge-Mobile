@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/Homescreen';
-import NewTaskScreen from '../screens/NewTaskScreen';
+import CreateTaskScreen from '../screens/CreateTaskScreen';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +20,7 @@ export default ScreenNavigator = () => (
 
         <Stack.Screen
             name="CreateTask"
-            component={NewTaskScreen}
+            component={CreateTaskScreen}
             options={{
                 title: "New task",
             }}

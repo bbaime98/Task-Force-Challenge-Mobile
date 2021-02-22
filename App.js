@@ -5,12 +5,11 @@ import AppLoading from 'expo-app-loading';
 import { useFonts  } from 'expo-font';
 import {Provider} from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native';
-// import 'react-native-gesture-handler';
-import configureStore from './redux/configureStore'
-import NeweTaskScreen from './screens/NewTaskScreen';
+import store from './redux/store'
+
 import StackNaviagtor from './navigation/stackNaviagtor';
 
-const store = configureStore()
+
 export default function App() {
   let [fontsLoaded] = useFonts({
     'bold': require('./assets/fonts/Montserrat-Bold.ttf'),

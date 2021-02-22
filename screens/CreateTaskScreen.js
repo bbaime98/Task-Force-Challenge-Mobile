@@ -12,7 +12,8 @@ import SubmitButton from '../components/common/form/SubmitButton';
 import Form from '../components/common/form/Form';
 import FormField from '../components/common/form/FormField';
 import {useDispatch, useSelector} from 'react-redux'
-import {taskCreated, getTasks} from '../redux/tasks'
+import {createTaskAction} from '../redux/actions/createTaskAction'
+import {getTasksAction} from '../redux/actions/getTasksAction'
 import { AsyncStorage } from "react-native";
 
 
@@ -21,7 +22,7 @@ const validationSchema = Yup.object().shape({
     description: Yup.string().required().trim().min(1).max(240).label("Description"),
   });
 
-const  NeweTaskScreen =(props)=>{
+const  NeweTaskScreen =({navigation})=>{
   const [priority, setPriority] = useState('LOW')
     // useEffect(()=>{
     //    return ()=> {
@@ -31,30 +32,36 @@ const  NeweTaskScreen =(props)=>{
     //        Keyboard.removeSubscription()
     //    }
     // },[])
-    useEffect(()=>{
-      const storeData = async () =>{
-        try {
-                const ok =  await AsyncStorage.getItem("@we")
-                console.log('_GET SUCCESS__', ok)
+    // useEffect(()=>{
+    //   const storeData = async () =>{
+    //     try {
+    //             const ok =  await AsyncStorage.removeItem("@we")
+    //             console.log('_GET SUCCESS__', ok)
 
-                } catch (e) {
-                  // saving error
-                  console.log('__GET __ERROR___', e)
-                }
-      }
-      storeData()
-    },[])
+    //             } catch (e) {
+    //               // saving error
+    //               console.log('__GET __ERROR___', e)
+    //             }
+    //   }
+    //   storeData()
+    // },[])
     const dispatch = useDispatch()
     const handleSubmit =(taskData, {resetForm}) =>{
-      dispatch(taskCreated({...taskData, priority}))
+      dispatch(createTaskAction({...taskData, priority}))
       resetForm()
       setPriority('LOW')
     }
-    const bugs = useSelector(getTasks)
+    const selectoror = useSelector((state)=> state.newTask)
+
     useEffect(()=>{
-      console.log("++++++++TAKS____", bugs)
-      // dispatch(getUnresolvedBugs)
-    },[])
+      if(selectoror.success !== null && selectoror.success !== false){
+        dispatch(getTasksAction())
+       navigation.navigate("Home")
+      }
+      if(selectoror.error){
+        console.log("Error_", selectoror)
+      }
+    },[selectoror])
 return(
     <ScrollView
     showsHorizontalScrollIndicator={false}
