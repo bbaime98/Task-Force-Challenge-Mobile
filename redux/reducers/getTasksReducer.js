@@ -13,15 +13,15 @@ const tasksReducer = (state = initState, action) => {
         ...state,
         getTasksError: action.payload,
       };
-    case ACTION_TYPES.CREATE_TASK_SUCCESS:
+    case ACTION_TYPES.DELETE_TASK:
       return {
         ...state,
-        success: action.payload,
+        deleted: action.payload,
       };
-    case ACTION_TYPES.CREATE_TASK_ERROR:
+    case ACTION_TYPES.RESET_DELETE_STATE:
       return {
         ...state,
-        error: action.payload,
+        deleted: action.payload,
       };
     default:
       return state;

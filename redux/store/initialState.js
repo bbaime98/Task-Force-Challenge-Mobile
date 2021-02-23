@@ -1,18 +1,8 @@
 const state = {
-  auth: {
-    signInError: '',
-    isAuth: false,
-    isAdminAuthenticated: false,
-    isClientAuthenticated: false,
-    isClientLoggedOut: false,
-    isAdminLoggedOut: false,
-  },
-  drawer: {
-    isToggled: true,
-  },
   tasks:{
      availableTasks: [],
      getTasksError: null,
+     deleted: null,
   },
   newTask:{
      success: null,
