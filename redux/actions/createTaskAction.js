@@ -10,13 +10,8 @@ export const createTaskAction = (taskData) => async (
     dispatch, getState
 ) => {
     try {
-        // const customDate = date.split(',')
-        console.log("##__DATE___","++++++customDate", customDate[1], customDate[2])
         let newTasksArray = []
-        const allTasks = await getTasksAction();
         const { tasks } = getState()
-        console.log("##CREATE___1___", "ALL___:", allTasks)
-        console.log("##CREATE_STATE__2___", tasks)
         const { availableTasks } = tasks
         newTasksArray.push(...availableTasks, { 
             id: uuid.v4(),

@@ -15,14 +15,12 @@ import * as ImagePicker from "expo-image-picker"
 import colors from "../utils/colors"
 import {FULL_HEIGHT_SIZE, FULL_WIDTH_SIZE} from "../utils/dimensions"
 import AppText from "../components/common/AppText"
-import AppTextInput from "../components/common/AppTextInput"
 import SubmitButton from "../components/common/form/SubmitButton"
 import Form from "../components/common/form/Form"
 import FormField from "../components/common/form/FormField"
 import {useDispatch, useSelector} from "react-redux"
 import {createTaskAction} from "../redux/actions/createTaskAction"
 import {getTasksAction} from "../redux/actions/getTasksAction"
-import {AsyncStorage} from "react-native"
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).max(140).label("Title"),
@@ -57,19 +55,7 @@ const NeweTaskScreen = ({navigation}) => {
       console.log("Error reading an image", error)
     }
   }
-  // useEffect(()=>{
-  //   const storeData = async () =>{
-  //     try {
-  //             const ok =  await AsyncStorage.removeItem("@we")
-  //             console.log('_GET SUCCESS__', ok)
 
-  //             } catch (e) {
-  //               // saving error
-  //               console.log('__GET __ERROR___', e)
-  //             }
-  //   }
-  //   storeData()
-  // },[])
   const dispatch = useDispatch()
   const handleSubmit = (taskData, {resetForm}) => {
     dispatch(createTaskAction({...taskData, priority, image}))
@@ -110,13 +96,11 @@ const NeweTaskScreen = ({navigation}) => {
           >
             <FormField
               maxLength={140}
-              autoCorrect={false}
               label="Title"
               name="title"
               placeholder="Task title(140 Characters)"
             />
             <FormField
-              autoCorrect={false}
               label="Description"
               name="description"
               maxLength={240}
@@ -126,7 +110,6 @@ const NeweTaskScreen = ({navigation}) => {
               textAlignVertical="top"
               returnKeyType="done"
               onSubmitEditing={Keyboard.dismiss}
-              //  numberOfLines={3}
             />
             <AppText>Priority</AppText>
             <Picker

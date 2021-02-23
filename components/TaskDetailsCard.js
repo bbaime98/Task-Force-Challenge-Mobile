@@ -1,7 +1,6 @@
 import React from "react"
 import {View, StyleSheet, TouchableOpacity} from "react-native"
 import {Ionicons, SimpleLineIcons} from "@expo/vector-icons"
-import {FULL_HEIGHT_SIZE, FULL_WIDTH_SIZE} from "../utils/dimensions"
 import colors from "../utils/colors"
 import AppText from "./common/AppText"
 import PiorityIndicator from "./common/PiorityIndicator"
@@ -87,9 +86,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: "90%",
     alignSelf: "center",
-    // backgroundColor: "red",
-    // marginLeft: 5,
-    // marginRight: 5
   },
   checkBox: {
     width: 26,

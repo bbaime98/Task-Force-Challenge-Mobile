@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {View, StyleSheet, Image} from "react-native"
 import AppText from "../components/common/AppText"
 import IconButton from "../components/common/IconButton"
@@ -6,9 +6,20 @@ import AppButton from "../components/common/AppButton"
 import PiorityIndicator from "../components/common/PiorityIndicator"
 import colors from "../utils/colors"
 import {FULL_HEIGHT_SIZE, FULL_WIDTH_SIZE} from "../utils/dimensions"
+import {useDispatch, useSelector} from "react-redux"
+import {deleteTasksAction} from "../redux/actions/deleteTasksAction"
+import {getTasksAction} from "../redux/actions/getTasksAction"
 
-function TaskDetailsScreen({route}) {
+function TaskDetailsScreen({navigation, route}) {
+  const dispatch = useDispatch()
+  const {deleted} = useSelector((state) => state.tasks)
   const {taskDetails} = route.params
+  useEffect(()=>{
+    if(deleted && deleted !== null && deleted === true){
+        dispatch(getTasksAction())
+        return navigation.navigate('Home')
+    }
+  },[deleted])
   return (
     <View style={styles.container}>
       <Image
@@ -20,7 +31,6 @@ function TaskDetailsScreen({route}) {
       <View style={styles.actionContainer}>
         <View
           style={{
-            // backgroundColor: "red",
             width: "30%",
           }}
         >
@@ -32,17 +42,10 @@ function TaskDetailsScreen({route}) {
         </View>
 
         <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            // paddingLeft: FULL_WIDTH_SIZE / 4,
-            paddingLeft: 20,
-            // backgroundColor:"green",
-            width: "60%",
-          }}
+          style={styles.actionBtns}
         >
           <IconButton name="edit" />
-          <IconButton name="close" />
+          <IconButton name="close" onPress={()=>dispatch(deleteTasksAction(taskDetails.id))}/>
           <AppButton
             title="DONE"
             width="40%"
@@ -69,6 +72,12 @@ function TaskDetailsScreen({route}) {
 }
 
 const styles = StyleSheet.create({
+  actionBtns: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 20,
+    width: "60%",
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",

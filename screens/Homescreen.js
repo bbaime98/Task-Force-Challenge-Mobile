@@ -3,6 +3,7 @@ import {View, StyleSheet, FlatList} from "react-native"
 import {useDispatch, useSelector} from "react-redux"
 import {getTasksAction} from "../redux/actions/getTasksAction"
 import {resetNewTaskAction} from "../redux/actions/createTaskAction"
+import {reseDeleteAction} from "../redux/actions/deleteTasksAction"
 import colors from "../utils/colors"
 import AppText from "../components/common/AppText"
 import {FULL_HEIGHT_SIZE} from "../utils/dimensions"
@@ -36,7 +37,6 @@ function Homescreen({navigation}) {
       setDoneTasks(getDoneTasks)
     }
   }, [availableTasks])
-// const viewSingle
   return (
     <>
       <TopHeader />
@@ -62,7 +62,10 @@ function Homescreen({navigation}) {
               priority={item.priority}
               active={item.active}
               createdAt={item.createdAt}
-              onPress={()=>navigation.navigate("Details", {taskDetails: item})}
+              onPress={()=>{
+                dispatch(reseDeleteAction())
+                navigation.navigate("Details", {taskDetails: item})
+              }}
             />
           )}
         />
@@ -100,7 +103,6 @@ addBtnContainer: {
     backgroundColor: colors.black,
   },
   whitePart: {
-    // flex: 0.6,
     backgroundColor: colors.medium,
   },
   whiteCard: {
