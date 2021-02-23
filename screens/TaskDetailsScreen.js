@@ -7,8 +7,9 @@ import PiorityIndicator from "../components/common/PiorityIndicator"
 import colors from "../utils/colors"
 import {FULL_HEIGHT_SIZE, FULL_WIDTH_SIZE} from "../utils/dimensions"
 import {useDispatch, useSelector} from "react-redux"
-import {deleteTasksAction} from "../redux/actions/deleteTasksAction"
+import {deleteTasksAction, reseDeleteAction} from "../redux/actions/deleteTasksAction"
 import {getTasksAction} from "../redux/actions/getTasksAction"
+import {setTaskToDoneAction} from "../redux/actions/setTaskToDoneAction"
 
 function TaskDetailsScreen({navigation, route}) {
   const dispatch = useDispatch()
@@ -17,7 +18,7 @@ function TaskDetailsScreen({navigation, route}) {
   useEffect(()=>{
     if(deleted && deleted !== null && deleted === true){
         dispatch(getTasksAction())
-        return navigation.navigate('Home')
+        navigation.navigate('Home')
     }
   },[deleted])
   return (
@@ -44,13 +45,17 @@ function TaskDetailsScreen({navigation, route}) {
         <View
           style={styles.actionBtns}
         >
-          <IconButton name="edit" />
+          <IconButton name="edit" onPress={()=>{
+            dispatch(reseDeleteAction())
+            navigation.navigate("Edit", {taskDetails})
+            }}/>
           <IconButton name="close" onPress={()=>dispatch(deleteTasksAction(taskDetails.id))}/>
           <AppButton
-            title="DONE"
+            title={taskDetails.active ? "DONE": "UNDONE"}
             width="40%"
             btnStyle={styles.doneBtn}
             style={styles.doneText}
+            onPress={()=>dispatch(setTaskToDoneAction(taskDetails.id, false))}
           />
         </View>
       </View>
@@ -63,7 +68,7 @@ function TaskDetailsScreen({navigation, route}) {
         <View style={{flexDirection: "row"}}>
           <AppText style={styles.date}>Created {taskDetails.createdAt}</AppText>
           <AppText style={[styles.date, {paddingLeft: 20}]}>
-            Modified 14 Feb 2021
+            Modified {taskDetails.modified}
           </AppText>
         </View>
       </View>

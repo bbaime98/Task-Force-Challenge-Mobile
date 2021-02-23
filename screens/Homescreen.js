@@ -16,38 +16,34 @@ import TaskSeparator from "../components/common/separator"
 
 function Homescreen({navigation}) {
   const [tasks, setTasks] = useState([])
-  const [activeAasks, setActiveTasks] = useState([])
-  const [doneTasks, setDoneTasks] = useState([])
   const dispatch = useDispatch()
-  const {availableTasks, getTasksError} = useSelector((state) => state.tasks)
+  const {availableTasks, deleted} = useSelector((state) => state.tasks)
   useEffect(() => {
     dispatch(getTasksAction())
-  }, [navigation])
+  }, [])
 
   useEffect(() => {
     if (availableTasks && availableTasks.length !== 0) {
-      const getActiveTasks = availableTasks.filter(
-        (task) => task.active === true
-      )
-      const getDoneTasks = availableTasks.filter(
-        (task) => task.active === false
-      )
+
       setTasks(availableTasks)
-      setActiveTasks(getActiveTasks)
-      setDoneTasks(getDoneTasks)
     }
-  }, [availableTasks])
+
+  }, [availableTasks, deleted])
   return (
     <>
       <TopHeader />
       <View style={styles.darkPart}>
         <View style={styles.whiteCard}>
           <AppText style={{fontFamily: "bold", fontSize: 25}}>Welcome</AppText>
-          {tasks ? (
+          {availableTasks && availableTasks.length !== 0 ? (
               <>
             <TasksInfoCards
-             activeCounter={activeAasks.length}  
-             doneCounter={doneTasks.length} 
+             activeCounter={availableTasks.filter(
+              (task) => task.active === true
+            ).length}  
+             doneCounter={ availableTasks.filter(
+              (task) => task.active === false
+            ).length} 
              totalCounter={tasks.length} />
             <View style={{height: 20}}/>
             <FlatList
@@ -62,7 +58,8 @@ function Homescreen({navigation}) {
               priority={item.priority}
               active={item.active}
               createdAt={item.createdAt}
-              onPress={()=>{
+              modified={item.modified}
+              onPress={()=>{  
                 dispatch(reseDeleteAction())
                 navigation.navigate("Details", {taskDetails: item})
               }}

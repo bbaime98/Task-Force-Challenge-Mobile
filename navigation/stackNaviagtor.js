@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/Homescreen';
 import CreateTaskScreen from '../screens/CreateTaskScreen';
 import TaskDetailsScreen from '../screens/TaskDetailsScreen';
+import EditTaskScreen from '../screens/EditTaskScreen';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,10 @@ export default ScreenNavigator = () => (
         <Stack.Screen
             name="Details"
             component={TaskDetailsScreen}
+        />
+        <Stack.Screen
+            name="Edit"
+            component={EditTaskScreen}
         />
 
     </Stack.Navigator>

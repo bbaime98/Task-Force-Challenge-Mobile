@@ -8,7 +8,7 @@ export const getTasksAction = () => async (
     try {
         const jsonValue = await AsyncStorage.getItem(KEY)
         if (jsonValue != null) {
-            const tasks = initialState = JSON.parse(jsonValue)
+            const tasks  = JSON.parse(jsonValue)
             dispatch({
                 type: ACTION_TYPES.GET_TASKS_SUCCESS,
                 payload: tasks,

@@ -18,10 +18,25 @@ const tasksReducer = (state = initState, action) => {
         ...state,
         deleted: action.payload,
       };
+    case ACTION_TYPES.EDIT_TASK:
+      return {
+        ...state,
+         availableTasks: action.payload,
+      };
+    case ACTION_TYPES.SET_TASK_TO_DONE:
+      return {
+        ...state,
+         availableTasks: action.payload,
+      };
     case ACTION_TYPES.RESET_DELETE_STATE:
       return {
         ...state,
         deleted: action.payload,
+      };
+    case ACTION_TYPES.RESET_EDIT_STATE:
+      return {
+        ...state,
+        edited: action.payload,
       };
     default:
       return state;
