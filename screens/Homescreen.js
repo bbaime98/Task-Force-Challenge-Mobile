@@ -1,16 +1,17 @@
-import React, {useEffect} from "react"
-import {View, StyleSheet, Button, Text, Image} from "react-native"
+import React, {useEffect, useState} from "react"
+import {View, StyleSheet, FlatList} from "react-native"
 import {useDispatch, useSelector} from "react-redux"
 import {getTasksAction} from "../redux/actions/getTasksAction"
 import {resetNewTaskAction} from "../redux/actions/createTaskAction"
 import colors from "../utils/colors"
 import AppText from "../components/common/AppText"
-import {FULL_HEIGHT_SIZE, FULL_WIDTH_SIZE} from "../utils/dimensions"
-import Card from "../components/common/Card"
-import AppButton from "../components/common/AppButton"
+import {FULL_HEIGHT_SIZE} from "../utils/dimensions"
 import AddButton from "../components/common/AddButton"
-import {Feather, MaterialCommunityIcons} from "@expo/vector-icons"
-import {useState} from "react/cjs/react.development"
+import TasksInfoCards from "../components/TasksCountersCards"
+import NoTasksAvailable from "../components/NoTasksAvailable"
+import TopHeader from "../components/TopHeader"
+import TaskDetailsCard from "../components/TaskDetailsCard"
+import TaskSeparator from "../components/common/separator"
 
 function Homescreen({navigation}) {
   const [tasks, setTasks] = useState([])
@@ -20,7 +21,7 @@ function Homescreen({navigation}) {
   const {availableTasks, getTasksError} = useSelector((state) => state.tasks)
   useEffect(() => {
     dispatch(getTasksAction())
-  }, [])
+  }, [navigation])
 
   useEffect(() => {
     if (availableTasks && availableTasks.length !== 0) {
@@ -35,99 +36,42 @@ function Homescreen({navigation}) {
       setDoneTasks(getDoneTasks)
     }
   }, [availableTasks])
-
+// const viewSingle
   return (
     <>
-      <View style={styles.header}>
-        <Image source={require("../assets/IW_logo.png")} style={styles.logo} />
-        <View style={{flexDirection: "row", marginRight: 30}}>
-          <Feather
-            name="search"
-            size={24}
-            color="white"
-            style={{paddingRight: 20}}
-          />
-          <MaterialCommunityIcons
-            name="filter-variant"
-            size={24}
-            color="white"
-          />
-        </View>
-      </View>
+      <TopHeader />
       <View style={styles.darkPart}>
         <View style={styles.whiteCard}>
           <AppText style={{fontFamily: "bold", fontSize: 25}}>Welcome</AppText>
           {tasks ? (
-            <>
-              <View style={styles.smallCardsContainer}>
-                <Card
-                  cardStyle={styles.cardStyle}
-                  cardNameStyle={styles.cardNameStyle}
-                  counterStyle={styles.counterStyle}
-                  count={tasks.length}
-                  cardName="Total Tasks"
-                />
-                <Card
-                  cardStyle={styles.cardStyle}
-                  cardNameStyle={styles.cardNameStyle}
-                  counterStyle={styles.counterStyle}
-                  count={activeAasks.length}
-                  cardName="Active Tasks"
-                />
-                <Card
-                  cardStyle={styles.cardStyle}
-                  cardNameStyle={styles.cardNameStyle}
-                  counterStyle={styles.counterStyle}
-                  count={doneTasks.length}
-                  cardName="Tasks Done"
-                />
-              </View>
+              <>
+            <TasksInfoCards
+             activeCounter={activeAasks.length}  
+             doneCounter={doneTasks.length} 
+             totalCounter={tasks.length} />
+            <View style={{height: 20}}/>
+            <FlatList
+            showsVerticalScrollIndicator={false}
+          data={tasks}
+          keyExtractor={(task) => task.id}
+          ItemSeparatorComponent={TaskSeparator}
+          renderItem={({ item, index }) => (
+            <TaskDetailsCard
+              index={index + 1}
+              title={item.title}
+              priority={item.priority}
+              active={item.active}
+              createdAt={item.createdAt}
+              onPress={()=>navigation.navigate("Details", {taskDetails: item})}
+            />
+          )}
+        />
             </>
           ) : (
-            <>
-              <View style={styles.smallCardsContainer}>
-                <Card count={0} cardName="Active Tasks" />
-                <Card count={0} cardName="Active Tasks" />
-              </View>
-              <View style={styles.smallCardsContainer}>
-                <Card count={0} cardName="Active Tasks" />
-                <Card count={0} cardName="Active Tasks" />
-              </View>
-
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: 60,
-                }}
-              >
-                <AppText style={styles.nothing}>Nothing here</AppText>
-                <AppText style={styles.subText}>
-                  Just like your crush's replies
-                </AppText>
-                <View>
-                  <AppButton
-                    style={{fontSize: 12, fontFamily: "bold"}}
-                    title="START with a new task"
-                    width="80%"
-                    onPress={() => {
-                      dispatch(resetNewTaskAction())
-                      navigation.navigate("CreateTask")
-                    }}
-                  />
-                </View>
-              </View>
-            </>
+            <NoTasksAvailable navigation={navigation}/>
           )}
 
-          <View
-            style={{
-              position: "absolute",
-              alignSelf: "flex-end",
-              bottom: 20,
-              right: 10,
-            }}
-          >
+          <View style={styles.addBtnContainer} >
             <AddButton
               onPress={() => {
                 dispatch(resetNewTaskAction())
@@ -143,44 +87,11 @@ function Homescreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  counterStyle: {
-    fontSize: 18,
-  },
-  cardNameStyle: {
-    fontSize: 11,
-  },
-  cardStyle: {
-    width: "32%",
-    height: 65,
-  },
-  nothing: {
-    fontFamily: "bold",
-    color: colors.dark,
-    textTransform: "uppercase",
-    fontSize: 15,
-  },
-  subText: {
-    color: colors.secondary,
-    fontSize: 14,
-    marginVertical: 0,
-  },
-  header: {
+addBtnContainer: {
     position: "absolute",
-    top: 20,
-    zIndex: 1000,
-    width: FULL_WIDTH_SIZE,
-    justifyContent: "space-between",
-    flexDirection: "row",
-  },
-  logo: {
-    height: 30,
-    width: 30,
-    marginLeft: 30,
-  },
-  smallCardsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
+    alignSelf: "flex-end",
+    bottom: 20,
+    right: 10,
   },
   darkPart: {
     flex: 0.37,
