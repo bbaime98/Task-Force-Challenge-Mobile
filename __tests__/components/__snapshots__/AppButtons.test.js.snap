@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppButton snapshot 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#0C0D0D",
+      "borderRadius": 5,
+      "justifyContent": "center",
+      "marginVertical": 35,
+      "opacity": 1,
+      "padding": 15,
+      "width": "50%",
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#FFFFFF",
+          "fontFamily": "semiBold",
+          "fontSize": 15,
+          "textTransform": "uppercase",
+        },
+        undefined,
+      ]
+    }
+  />
+</View>
+`;
