@@ -6,3 +6,5 @@ export const EDIT_TASK = 'EDIT_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
 export const RESET_NEW_TASK_STATE = 'RESET_NEW_TASK_STATE';
 export const RESET_DELETE_STATE = 'RESET_DELETE_STATE';
+export const RESET_EDIT_STATE = 'RESET_EDIT_STATE';
+export const SET_TASK_TO_DONE = 'SET_TASK_TO_DONE';

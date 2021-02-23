@@ -9,7 +9,7 @@ const TaskDetailsCard = ({
   active,
   title,
   createdAt,
-  editedAt,
+  modified,
   priority,
   index,
   onPress,
@@ -34,7 +34,7 @@ const TaskDetailsCard = ({
         </TouchableOpacity>
       </View>
 
-      <View style={{paddingLeft: 20}}>
+      <View style={{paddingLeft: 20, width: "100%"}}>
         <AppText
           style={[
             styles.taskName,
@@ -54,17 +54,19 @@ const TaskDetailsCard = ({
           >
             created {createdAt}
           </AppText>
-          <AppText
-            style={[
-              styles.date,
-              {
-                paddingLeft: 15,
-                color: !active ? colors.disabled : colors.secondary,
-              },
-            ]}
-          >
-            Modified 15 Feb 2021
-          </AppText>
+          {modified && (
+            <AppText
+              style={[
+                styles.date,
+                {
+                  paddingLeft: 5,
+                  color: !active ? colors.disabled : colors.secondary,
+                },
+              ]}
+            >
+              Modified {modified}
+            </AppText>
+          )}
         </View>
       </View>
 
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   date: {
-    fontSize: 10,
+    fontSize: 8,
     color: colors.secondary,
     fontFamily: "semiBold",
     marginVertical: 1,

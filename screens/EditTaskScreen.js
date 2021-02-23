@@ -18,9 +18,8 @@ import AppText from "../components/common/AppText"
 import SubmitButton from "../components/common/form/SubmitButton"
 import Form from "../components/common/form/Form"
 import FormField from "../components/common/form/FormField"
-import {useDispatch, useSelector} from "react-redux"
-import {createTaskAction} from "../redux/actions/createTaskAction"
-import {getTasksAction} from "../redux/actions/getTasksAction"
+import {useDispatch} from "react-redux"
+import {editTaskAction} from "../redux/actions/editTasksAction"
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).max(140).label("Title"),
@@ -32,9 +31,10 @@ const validationSchema = Yup.object().shape({
     .label("Description"),
 })
 
-const NeweTaskScreen = ({navigation}) => {
-  const [priority, setPriority] = useState("LOW")
-  const [image, setImage] = useState(null)
+const EditScreen = ({navigation, route}) => {
+  const {taskDetails} = route.params
+  const [priority, setPriority] = useState(taskDetails.priority)
+  const [image, setImage] = useState(taskDetails.image)
   useEffect(() => {
     requestPermission()
   }, [])
@@ -58,21 +58,10 @@ const NeweTaskScreen = ({navigation}) => {
 
   const dispatch = useDispatch()
   const handleSubmit = (taskData, {resetForm}) => {
-    dispatch(createTaskAction({...taskData, priority, image}))
+    dispatch(editTaskAction({...taskData, priority, image, id: taskDetails.id}))
+    navigation.goBack()
     resetForm()
-    setPriority("LOW")
   }
-  const newTask = useSelector((state) => state.newTask)
-
-  useEffect(() => {
-    if (newTask.success !== null && newTask.success !== false) {
-      dispatch(getTasksAction())
-      navigation.navigate("Home")
-    }
-    if (newTask.error) {
-      console.log("Error_", newTask)
-    }
-  }, [newTask])
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
@@ -80,17 +69,12 @@ const NeweTaskScreen = ({navigation}) => {
     >
       <View style={styles.main}>
         <View style={styles.container}>
-          <AppText style={{fontFamily: "bold", fontSize: 25}}>New task</AppText>
+          <AppText style={{fontFamily: "bold", fontSize: 25}}>Edit task</AppText>
+            <TouchableOpacity  onPress={selectImage}>
           {image && <Image style={styles.imageBg} source={{uri: image}} />}
-          {image === null && (
-            <TouchableOpacity style={styles.selectImage} onPress={selectImage}>
-              <AppText style={{color: colors.secondary, padding: 20}}>
-                Tap to add Image
-              </AppText>
             </TouchableOpacity>
-          )}
           <Form
-            initialValues={{title: "", description: "",}}
+            initialValues={{title: taskDetails.title, description: taskDetails.description,}}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}
           >
@@ -99,6 +83,7 @@ const NeweTaskScreen = ({navigation}) => {
               label="Title"
               name="title"
               placeholder="Task title(140 Characters)"
+              defaultValue={taskDetails.title}
             />
             <FormField
               label="Description"
@@ -110,6 +95,7 @@ const NeweTaskScreen = ({navigation}) => {
               textAlignVertical="top"
               returnKeyType="done"
               onSubmitEditing={Keyboard.dismiss}
+              defaultValue={taskDetails.description}
             />
             <AppText>Priority</AppText>
             <Picker
@@ -131,7 +117,7 @@ const NeweTaskScreen = ({navigation}) => {
               <Picker.Item label="MEDIUM" value="MEDIUM" />
               <Picker.Item label="HIGH" value="HIGH" />
             </Picker>
-            <SubmitButton title="create task" onPress />
+            <SubmitButton title="edit task" onPress />
           </Form>
         </View>
       </View>
@@ -171,4 +157,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default NeweTaskScreen
+export default EditScreen

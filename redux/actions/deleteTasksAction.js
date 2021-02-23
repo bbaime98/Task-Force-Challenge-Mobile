@@ -9,7 +9,8 @@ export const deleteTasksAction = (taskId) => async (dispatch, getState) => {
 
     const newTasksArray = availableTasks.filter((task) => task.id !== taskId)
     await AsyncStorage.setItem(KEY, JSON.stringify(newTasksArray))
-    dispatch({
+
+    return dispatch({
       type: ACTION_TYPES.DELETE_TASK,
       payload: true,
     })

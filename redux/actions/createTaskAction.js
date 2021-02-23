@@ -11,6 +11,7 @@ export const createTaskAction = (taskData) => async (
 ) => {
     try {
         let newTasksArray = []
+       await getTasksAction();
         const { tasks } = getState()
         const { availableTasks } = tasks
         newTasksArray.push(...availableTasks, { 
