@@ -12,12 +12,12 @@ const NoTasksAvailable = ({navigation }) => {
   return (
     <>
       <View style={styles.smallCardsContainer}>
-        <Card count={0} cardName="Active Tasks" />
-        <Card count={0} cardName="Active Tasks" />
+        <Card cardNameStyle={styles.cardName} count={0} cardName="Total Tasks" />
+        <Card cardNameStyle={styles.cardName} count={0} cardName="Active Tasks" />
       </View>
       <View style={styles.smallCardsContainer}>
-        <Card count={0} cardName="Active Tasks" />
-        <Card count={0} cardName="Active Tasks" />
+        <Card cardNameStyle={styles.cardName} count={0} cardName="Tasks Done" />
+        <Card cardNameStyle={styles.cardName} count={0} cardName="Active High Priority" />
       </View>
 
       <View
@@ -46,6 +46,10 @@ const NoTasksAvailable = ({navigation }) => {
 }
 
 const styles = StyleSheet.create({
+  cardName: {
+    fontSize: 11,
+    fontFamily: "bold"
+},
   nothing: {
     fontFamily: "bold",
     color: colors.dark,

@@ -51,7 +51,7 @@ function TaskDetailsScreen({navigation, route}) {
             }}/>
           <IconButton name="close" onPress={()=>dispatch(deleteTasksAction(taskDetails.id))}/>
           <AppButton
-            title={taskDetails.active ? "DONE": "UNDONE"}
+            title={taskDetails.active ? "ACTIVE": "DONE"}
             width="40%"
             btnStyle={styles.doneBtn}
             style={styles.doneText}
