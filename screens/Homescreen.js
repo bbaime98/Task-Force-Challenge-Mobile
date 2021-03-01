@@ -3,11 +3,13 @@ import {View, StyleSheet, FlatList} from "react-native"
 import {useDispatch, useSelector} from "react-redux"
 import {getTasksAction} from "../redux/actions/getTasksAction"
 import {resetNewTaskAction} from "../redux/actions/createTaskAction"
-import {reseDeleteAction} from "../redux/actions/deleteTasksAction"
+import {reseDeleteAction, deleteAllTasksAction} from "../redux/actions/deleteTasksAction"
+import {changeAllTasksStatusAction} from "../redux/actions/editTasksAction"
 import colors from "../utils/colors"
 import AppText from "../components/common/AppText"
 import {FULL_HEIGHT_SIZE} from "../utils/dimensions"
 import AddButton from "../components/common/AddButton"
+import AppButton from "../components/common/AppButton"
 import TasksInfoCards from "../components/TasksCountersCards"
 import NoTasksAvailable from "../components/NoTasksAvailable"
 import TopHeader from "../components/TopHeader"
@@ -45,7 +47,23 @@ function Homescreen({navigation}) {
               (task) => task.active === false
             ).length} 
              totalCounter={tasks.length} />
-            <View style={{height: 20}}/>
+            <View style={styles.actionsBtnContainer} >
+            <AppButton
+            title="CHANGE STATUS"
+            width="45%"
+            btnStyle={styles.changeStatusBtn}
+            style={styles.changeStatusText}
+            onPress={()=> dispatch(changeAllTasksStatusAction())}
+          />
+            <AppButton
+            title="RESET"
+            width="40%"
+            btnStyle={styles.deleteBtn}
+            style={styles.deleteText}
+            onPress={()=> dispatch(deleteAllTasksAction())}
+          />
+          </View>
+            <View style={{height: 50}}/>
             <FlatList
             showsVerticalScrollIndicator={false}
           data={tasks}
@@ -121,6 +139,38 @@ addBtnContainer: {
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
     elevation: 6,
+  },
+  actionsBtnContainer: {
+    position: "absolute",
+    top: 130,
+    left: 10,
+    width: "100%",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    zIndex: 1000,
+  },
+  deleteBtn: {
+    backgroundColor: "transparent",
+    borderWidth: 1.5,
+    height: 42,
+    borderColor: colors.dark,
+    padding: 8,
+  },
+  deleteText: {
+    color: colors.dark,
+    fontSize: 10,
+    fontFamily: "bold",
+  },
+  changeStatusBtn: {
+    backgroundColor:colors.primary,
+    borderWidth: 1,
+    height: 42,
+    borderColor: colors.primary,
+  },
+  changeStatusText: {
+    color: colors.white,
+    fontSize: 10,
+    fontFamily: "bold",
   },
 })
 

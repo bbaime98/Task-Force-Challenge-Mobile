@@ -19,6 +19,19 @@ export const deleteTasksAction = (taskId) => async (dispatch, getState) => {
   }
 }
 
+export const deleteAllTasksAction = () => async (dispatch) => {
+  try {
+    await AsyncStorage.removeItem(KEY);
+
+    return dispatch({
+      type: ACTION_TYPES.DELETE_ALL_TASKS,
+      payload: [],
+    })
+  } catch (error) {
+    console.log("___DELETE ALL TASK ERROR__", error)
+  }
+}
+
 export const reseDeleteAction = () => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.RESET_DELETE_STATE,

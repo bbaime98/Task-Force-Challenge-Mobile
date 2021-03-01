@@ -44,7 +44,7 @@ const TaskDetailsCard = ({
           {index} {title}
         </AppText>
 
-        <PiorityIndicator priority={priority} />
+        <PiorityIndicator status={active} priority={priority} />
         <View style={styles.dateContainer}>
           <AppText
             style={[

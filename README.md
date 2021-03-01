@@ -54,7 +54,9 @@ For simplicity, this project runs perfectly on [ios devices]() only. Therefore, 
   - Viewing details of a specific task 
   - Editing any of the aforementioned property of a task of your choice
   - Changing the task status from Active to Done
+  - Changing all tasks status with one click
   - Deleting the task
+  - Deleting all tasks at once
 
  
 ## Technologies

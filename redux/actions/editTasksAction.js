@@ -23,6 +23,21 @@ export const editTaskAction = (taskData) => async (dispatch, getState) => {
     console.log("___EDIT TASK ERROR__", error)
   }
 }
+export const changeAllTasksStatusAction = () => async (dispatch, getState) => {
+  try {
+    const {tasks} = getState()
+    const {availableTasks} = tasks
+    availableTasks.forEach((task) => task.active = false);
+    await AsyncStorage.setItem(KEY, JSON.stringify(availableTasks))
+
+    return dispatch({
+      type: ACTION_TYPES.CHANGE_ALL_TASKS_STATUS,
+      payload: availableTasks,
+    })
+  } catch (error) {
+    console.log("___CHANGE TASK STATUS  ERROR__", error)
+  }
+}
 
 export const reseDeleteAction = () => async (dispatch) => {
   dispatch({
