@@ -67,9 +67,9 @@ function TaskDetailsScreen({navigation, route}) {
 
         <View style={{flexDirection: "row"}}>
           <AppText style={styles.date}>Created {taskDetails.createdAt}</AppText>
-          <AppText style={[styles.date, {paddingLeft: 20}]}>
+          { taskDetails.modified && <AppText style={[styles.date, {paddingLeft: 20}]}>
             Modified {taskDetails.modified}
-          </AppText>
+          </AppText>}
         </View>
       </View>
     </View>

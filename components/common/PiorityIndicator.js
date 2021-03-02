@@ -3,20 +3,22 @@ import {View, StyleSheet} from "react-native"
 import AppText from "../common/AppText"
 import colors from "../../utils/colors"
 
-function PiorityIndicator({priority, width = "40%", height = 20}) {
+function PiorityIndicator({priority, status, width = "40%", height = 20}) {
   return (
     <View
       style={[
         styles.priorityContainer,
         {
           backgroundColor:
-            priority === "LOW"
+            priority === "LOW" && status
               ? colors.medium
-              : priority === "MEDIUM"
+              : priority === "MEDIUM" && status
               ? colors.secondary
-              : colors.dark,
-              width,
-              height
+              : priority === "HIGH" && status
+              ? colors.dark
+              : !status && colors.disabled,
+          width,
+          height,
         },
       ]}
     >
@@ -25,11 +27,13 @@ function PiorityIndicator({priority, width = "40%", height = 20}) {
           styles.priorityText,
           {
             color:
-              priority === "LOW"
+              priority === "LOW" && status
                 ? colors.black
-                : priority === "MEDIUM"
+                : priority === "MEDIUM" && status
                 ? colors.white
-                : colors.primary,
+                : priority === "HIGH" && status
+                ? colors.primary
+                : !status && colors.medium,
           },
         ]}
       >
