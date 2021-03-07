@@ -15,24 +15,37 @@ import NoTasksAvailable from "../components/NoTasksAvailable"
 import TopHeader from "../components/TopHeader"
 import TaskDetailsCard from "../components/TaskDetailsCard"
 import TaskSeparator from "../components/common/separator"
+import AppModal from "../components/AppModal"
 
 function Homescreen({navigation}) {
   const [tasks, setTasks] = useState([])
+  const [visible, setVisible] = useState(false)
   const dispatch = useDispatch()
   const {availableTasks, deleted} = useSelector((state) => state.tasks)
+
   useEffect(() => {
     dispatch(getTasksAction())
   }, [])
 
   useEffect(() => {
-    if (availableTasks && availableTasks.length !== 0) {
 
+    if (availableTasks && availableTasks.length !== 0) {
       setTasks(availableTasks)
     }
 
   }, [availableTasks, deleted])
+
   return (
     <>
+      <AppModal 
+        visible={visible} 
+        yesHandler={()=> {
+          dispatch(deleteAllTasksAction())
+          setVisible(false)
+        }}
+        noHandler={()=>setVisible(false)}
+        modalTitle="Are sure you want to delete all your tasks?"
+       />
       <TopHeader />
       <View style={styles.darkPart}>
         <View style={styles.whiteCard}>
@@ -60,7 +73,7 @@ function Homescreen({navigation}) {
             width="40%"
             btnStyle={styles.deleteBtn}
             style={styles.deleteText}
-            onPress={()=> dispatch(deleteAllTasksAction())}
+            onPress={()=> setVisible(true)}
           />
           </View>
             <View style={{height: 50}}/>
